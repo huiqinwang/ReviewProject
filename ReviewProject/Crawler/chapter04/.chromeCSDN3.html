@@ -1,0 +1,1430 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+            <link rel="canonical" href="http://blog.csdn.net/weixin_36001351/article/details/72236804"/> 
+
+   
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>python学习之单元测试 - huiqin08的博客
+        - CSDN博客</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="原文地址：http://www.tuicool.com/articles/263m22背景： 大型软件系统的开发是一个很复杂的过程，其中因为人的因素而所产生的错误非常多，因此软件在开发过程必须要有相应的质量保证活动，而软件测试则是保证质量的关键措施。正像软件熵（software entropy）所描述的那样：一个程序从设计很好的状态开始，随着新的功能不断地加入，程序逐渐地失去了原有的结构，最终变成了" />
+
+    <meta name="keywords" content="" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+       
+       
+        <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/skin-yellow/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/weixin_36001351/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>
+     
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72"  data-mtp="62" data-order="40" data-con="ad_content_2072" >
+                     <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer"  type="text/javascript"></script>
+                <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"></div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () { var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 }; window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 }); }</script><!-- 投放代码 --><script type="text/javascript">                    /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({ id: "u2895327" });  </script>  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/weixin_36001351">huiqin08的博客</a></h2>
+            <h3>菜鸟开始！</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/weixin_36001351?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/weixin_36001351?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/weixin_36001351/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "weixin_36001351";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/weixin_36001351";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://blog.csdn.net/epubit17/article/details/76811996">
+<font color=red><strong>赠书 | 异步2周年,技术图书免费选</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://blog.csdn.net/turingbooks/article/details/77479427">
+<font color=blue><strong>程序员8月书讯</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="https://gitee.com/enterprises?from=csdn-sqbkxq">
+<font color=red><strong>项目管理+代码托管+文档协作，开发更流畅</strong></font></a>
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=python%e5%ad%a6%e4%b9%a0%e4%b9%8b%e5%8d%95%e5%85%83%e6%b5%8b%e8%af%95&u=http://blog.csdn.net/weixin_36001351/article/details/72236804"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+    <h1>
+        <span class="link_title"><a href="/weixin_36001351/article/details/72236804">
+        python学习之单元测试        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_r">
+            <span class="link_postdate">2017-05-16 11:09</span>
+            <span class="link_view" title="阅读次数">45人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('python%e5%ad%a6%e4%b9%a0%e4%b9%8b%e5%8d%95%e5%85%83%e6%b5%8b%e8%af%95','72236804');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(72236804,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('6419690','weixin_36001351','top','72236804');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">计算机语言学习<em>（7）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/weixin_36001351/article/category/6419690"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_6419690">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+        <div class="markdown_views"><p>原文地址：<a href="http://www.tuicool.com/articles/263m22" target="_blank">http://www.tuicool.com/articles/263m22</a></p>
+
+<hr>
+
+<p><strong>背景</strong>： 大型软件系统的开发是一个很复杂的过程，其中因为人的因素而所产生的错误非常多，因此软件在开发过程必须要有相应的质量保证活动，而软件测试则是保证质量的关键措施。正像软件熵（software entropy）所描述的那样：一个程序从设计很好的状态开始，随着新的功能不断地加入，程序逐渐地失去了原有的结构，最终变成了一团乱麻（其实最初的”很好的状态”得加个问号）。测试的目的说起来其实很简单也极具吸引力，那就是写出高质量的软件并解决软件熵这一问题。</p>
+
+<p>使用Python语言的开发人员可以使用Steve Purcell编写的PyUnit作为单元测试框架，通过将单元测试融合到PyUnit这一测试框架里，Python程序员可以更容易地增加、管理、执行测试用例，并对测试结果进行分析。此外，使用PyUnit还可以实现自动单元测试（回归测试）</p>
+
+
+
+<h3 id="规范python单元测试">规范Python单元测试</h3>
+
+<p>测试是一个贯穿于整个开发过程的连续过程，从某个意义上说，软件开发的过程实际上就是测试过程。正如Martin Fowler所说的”在你不知道如何测试代码之前，就不该编写程序。而一旦你完成了程序，测试代码也应该完成。除非测试成功，你不能认为你编写出了可以工作的程序。”</p>
+
+
+
+<h4 id="手工测试">手工测试</h4>
+
+<p>手工测试方法存在许多问题。首先，测试程序的写法没有一定的规范可以遵循，十个程序员完全可能写出十种不同的测试程序来，如果每个Python程序员都有自己不同的设计测试类的方法，光维护被测试的类就够麻烦了，谁还顾得上维护测试类。其次，需要编写大量的辅助代码才能进行单元测试</p>
+
+
+
+<h4 id="单元测试">单元测试</h4>
+
+<p>让单元测试代码能够被测试和维护人员更容易地理解，最好的解决办法是让开发人员遵循一定的规范来编写用于测试的代码，具体到Python程序员来讲，则是要采用PyUnit这一自动测试框架来构造单元测试用例。目前PyUnit已经得到了大多数Python开发人员的认可，成了事实上的单元测试标准。</p>
+
+
+
+<h4 id="实例">实例</h4>
+
+<p>编写一个待测试的SparkContext类：</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">from</span> pyspark <span class="hljs-keyword">import</span> SparkConf,SparkContext
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SparkContext</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.__conf = SparkContext().setMaster(<span class="hljs-string">"local"</span>).setAppName(<span class="hljs-string">"movie"</span>)
+        self.__sc = SparkContext(conf=self.__conf)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_sc</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-string">'''
+
+        :return: SparkContext
+        '''</span>
+        <span class="hljs-keyword">return</span> self.__sc
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_conf</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-string">'''
+
+        :return: SparkConf
+        '''</span>
+        <span class="hljs-keyword">return</span> self.__conf</code></pre>
+
+<p>采用<strong>Pyunit</strong>进行测试：</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">from</span> kesaiRecommend.src.sc <span class="hljs-keyword">import</span> SparkContext
+<span class="hljs-keyword">import</span> unittest
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SparkContextTest</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">setUp</span><span class="hljs-params">(self)</span>:</span>
+        self.sparkContext = SparkContext()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tearDown</span><span class="hljs-params">(self)</span>:</span>
+        self.sparkContext = <span class="hljs-keyword">None</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testGetsc</span><span class="hljs-params">(self)</span>:</span>
+        self.assertIsNotNone(self.sparkContext.get_sc())
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testGetconf</span><span class="hljs-params">(self)</span>:</span>
+        self.assertIsNotNone(self.sparkContext.get_conf())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">suite</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-string">'''
+
+    :return: TestSuite
+    '''</span>
+    suite = unittest.TestSuite()
+    suite.addTest(SparkContextTest(<span class="hljs-string">'testGetsc'</span>))
+    suite.addTest(SparkContextTest(<span class="hljs-string">'testGetconf'</span>))
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    unittest.main(defaultTest=<span class="hljs-string">'suite'</span>)</code></pre>
+
+<p>代码说明： <br>
+1. 用import语句引入unittest模块(python自带包) <br>
+2. 让所有执行测试的类都继承于TestCase类，可以将TestCase看成是对特定类进行测试的方法的集合。 <br>
+3. 在setUp()方法中进行测试前的初始化工作，并在tearDown()方法中执行测试后的清除工作，setUp()和tearDown()都是TestCase类中定义的方法。 <br>
+4. 在testGetsc中调用assertIsNotNone方法，查看能否赋值成功 <br>
+5. 提供名为suite()的全局方法，PyUnit在执行测试的过程调用suit()方法来确定有多少个测试用例需要被执行，可以将TestSuite看成是包含所有测试用例的一个容器。 <br>
+6. 每个测试用例，都会自己执行一遍setUp()和tearDown()</p>
+
+<p>PyUnit使得所有的Python程序员都可以使用同样的单元测试方法，测试过程不再是杂乱无章的了，而是在同一规范指导下进行的有序行为，这就是使用PyUnit这一自动单元测试框架所带来的最大好处。</p>
+
+
+
+<h3 id="自动测试框架pyunit">自动测试框架PyUnit</h3>
+
+<p>在对软件测试理论和PyUnit有了一个大致了解之后，下面辅以具体的实例介绍Python程序员如何借助PyUnit来进行单元测试。在Python中进行单元测试时需要用到PyUnit模块，Python 2.1及其以后的版本都将PyUnit作为一个标准模块，可以导入相应模块，使用即可</p>
+
+<p><strong>测试用例TestCase</strong> <br>
+软件测试中最基本的组成<strong>单元</strong>是 测试用例 （test case），PyUnit使用TestCase类来表示测试用例，并要求所有用于执行测试的类都必须从该类继承。TestCase子类实现的测试代码应该是自包含（self contained）的，也就是说测试用例既可以单独运行，也可以和其它测试用例构成集合共同运行。</p>
+
+<p>TestCase在PyUnit测试框架中被视为测试单元的运行实体，Python程序员可以通过它派生自定义的测试过程与方法（测试单元），利用Command和Composite设计模式，多个TestCase还可以组合成测试用例集合。PyUnit测试框架在运行一个测试用例时，TestCase子类定义的setUp()、runTest()和tearDown()方法被依次执行，最简单的测试用例只需覆盖runTest()方法来执行特定的测试代码就可以了</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">import</span> unittest
+<span class="hljs-comment"># 执行测试的类</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runTest</span><span class="hljs-params">(self)</span>:</span>
+        widget = Widget()
+        self.assertEqual(widget.getSize(), (<span class="hljs-number">40</span>, <span class="hljs-number">40</span>))</code></pre>
+
+<p>PyUnit测试框架中构造上述WidgetTestCase类的一个实例，应该不带任何参数调用其构造函数:</p>
+
+<blockquote>
+  <p>testCase = WidgetTestCase()</p>
+</blockquote>
+
+<p>一个测试用例通常只对软件模块中的一个方法进行测试，采用覆盖runTest()方法来构造测试用例在PyUnit中称为 <strong>静态方法</strong> ，如果要对同一个软件模块中的多个方法进行测试，通常需要构造多个执行测试的类</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">import</span> unittest
+<span class="hljs-comment"># 测试getSize()方法的测试用例</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetSizeTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runTest</span><span class="hljs-params">(self)</span>:</span>
+        widget = Widget()
+        self.assertEqual(widget.getSize(), (<span class="hljs-number">40</span>, <span class="hljs-number">40</span>))
+<span class="hljs-comment"># 测试resize()方法的测试用例</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetResizeTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runTest</span><span class="hljs-params">(self)</span>:</span>
+        widget = Widget()
+        widget.resize(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+        self.assertEqual(widget.getSize(), (<span class="hljs-number">100</span>, <span class="hljs-number">100</span>))</code></pre>
+
+<p><strong>问题</strong>： 采用静态方法，Python程序员不得不为每个要测试的方法编写一个测试类（该类通过覆盖runTest()方法来执行测试），并在每一个测试类中生成一个待测试的对象 <br>
+<strong>动态</strong>：采用PyUnit提供的 动态方法 ，只编写一个测试类来完成对整个软件模块的测试，这样对象的初始化工作可以在setUp()方法中完成，而资源的释放则可以在tearDown()方法中完成</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">import</span> unittest
+<span class="hljs-comment"># 执行测试的类</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">setUp</span><span class="hljs-params">(self)</span>:</span>
+        self.widget = Widget()
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tearDown</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.dispose()
+        self.widget = <span class="hljs-keyword">None</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testSize</span><span class="hljs-params">(self)</span>:</span>
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">40</span>, <span class="hljs-number">40</span>))
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testResize</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.resize(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">100</span>, <span class="hljs-number">100</span>))</code></pre>
+
+<p>采用动态方法最大的好处是测试类的结构非常好，用于测试一个软件模块的所有代码都可以在同一个类中实现。动态方法不再覆盖runTest()方法，而是为测试类编写多个测试方法（ <strong>按习惯这些方法通常以test开头</strong> ），在创建TestCase子类的实例时必须给出测试方法的名称，来为PyUnit测试框架指明运行该测试用例时究竟应该调用测试类中的哪个方法</p>
+
+<blockquote>
+  <p>sizeTestCase = WidgetTestCase(“testSize”) <br>
+  resizeTestCase = WidgetTestCase(“testResize”)</p>
+</blockquote>
+
+<p><strong>测试用例集TestSuite</strong> <br>
+完整的单元测试很少只执行一个测试用例，开发人员通常都需要编写多个测试用例才能对某一软件功能进行比较完整的测试，这些相关的测试用例称为一个测试用例集，在PyUnit中是用TestSuite类来表示的</p>
+
+<p>在创建了一些TestCase子类的实例作为测试用例之后，下一步要做的工作就是用TestSuit类来组织它们。PyUnit测试框架允许Python程序员在单元测试代码中定义一个名为suite()的全局函数，并将其作为整个单元测试的入口，PyUnit通过调用它来完成整个测试过程</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">suite</span><span class="hljs-params">()</span>:</span>
+    suite = unittest.TestSuite()
+    suite.addTest(WidgetTestCase(<span class="hljs-string">"testSize"</span>))
+    suite.addTest(WidgetTestCase(<span class="hljs-string">"testResize"</span>))
+    <span class="hljs-keyword">return</span> suite</code></pre>
+
+<p>可以直接定义一个TestSuite的子类，并在其初始化方法（<strong>init</strong>）中完成所有测试用例的添加：</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetTestSuite</span><span class="hljs-params">(unittest.TestSuite)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        unittest.TestSuite.__init__(self, map(WidgetTestCase,
+                                              (<span class="hljs-string">"testSize"</span>,
+                                               <span class="hljs-string">"testResize"</span>)))
+</code></pre>
+
+<p>只需要在suite()方法中返回该类的一个实例就可以了:</p>
+
+<blockquote>
+  <p>def suite(): <br>
+      return WidgetTestSuite()</p>
+</blockquote>
+
+<p>更简洁方法：如果用于测试的类中所有的测试方法都以test开，Python程序员甚至可以用PyUnit模块提供的makeSuite()方法来构造一个TestSuite</p>
+
+<blockquote>
+  <p>def suite(): <br>
+      return unittest.makeSuite(WidgetTestCase, “test”)</p>
+</blockquote>
+
+<p>在PyUnit测试框架中，TestSuite类可以看成是TestCase类的一个容器，用来对多个测试用例进行组织，这样多个测试用例可以自动在一次测试中全部完成。事实上，TestSuite除了可以包含TestCase外，也可以包含TestSuite，从而可以构成一个更加庞大的测试用例集</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs ">suite1 = mysuite1.TheTestSuite()
+suite2 = mysuite2.TheTestSuite()
+alltests = unittest.TestSuite((suite1, suite2))</code></pre>
+
+<p><em>* 实施测试*</em> <br>
+ 编写测试用例（TestCase）并将它们组织成测试用例集（TestSuite）的最终目的只有一个：实施测试并获得最终结果。PyUnit使用TestRunner类作为测试用例的基本执行环境，来驱动整个单元测试过程。Python开发人员在进行单元测试时一般不直接使用TestRunner类，而是使用其子类TextTestRunner来完成测试，并将测试结果以文本方式显示出来</p>
+
+<blockquote>
+  <p>runner = unittest.TextTestRunner() <br>
+  runner.run(suite)</p>
+</blockquote>
+
+<p>TestRunner来实施测试的例子:</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">from</span> widget <span class="hljs-keyword">import</span> Widget
+<span class="hljs-keyword">import</span> unittest
+<span class="hljs-comment"># 执行测试的类</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">setUp</span><span class="hljs-params">(self)</span>:</span>
+        self.widget = Widget()
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tearDown</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.dispose()
+        self.widget = <span class="hljs-keyword">None</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testSize</span><span class="hljs-params">(self)</span>:</span>
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">40</span>, <span class="hljs-number">40</span>))
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testResize</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.resize(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)        
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">100</span>, <span class="hljs-number">100</span>))        
+<span class="hljs-comment"># 测试</span>
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    <span class="hljs-comment"># 构造测试集</span>
+    suite = unittest.TestSuite()
+    suite.addTest(WidgetTestCase(<span class="hljs-string">"testSize"</span>))
+    suite.addTest(WidgetTestCase(<span class="hljs-string">"testResize"</span>))
+
+    <span class="hljs-comment"># 执行测试</span>
+    runner = unittest.TextTestRunner()
+    runner.run(suite)</code></pre>
+
+<p><strong>说明</strong>：默认情况下，TextTestRunner将结果输出到sys.stderr上，但如果在创建TextTestRunner类实例时将一个文件对象传递给了构造函数，则输出结果将被重定向到该文件中。在Python的交互环境中驱动单元测试时，使用TextTestRunner类是一个不错的选择</p>
+
+<p>PyUnit模块中定义了一个名为main的全局方法，使用它可以很方便地将一个单元测试模块变成可以直接运行的测试脚本，main()方法使用TestLoader类来搜索所有包含在该模块中的测试方法，并自动执行它们。如果Python程序员能够按照约定（以test开头）来命名所有的测试方法，那就只需要在测试模块的最后加入如下几行代码即可</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-keyword">from</span> widget <span class="hljs-keyword">import</span> Widget
+<span class="hljs-keyword">import</span> unittest
+<span class="hljs-comment"># 执行测试的类</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WidgetTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">setUp</span><span class="hljs-params">(self)</span>:</span>
+        self.widget = Widget()
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tearDown</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.dispose()
+        self.widget = <span class="hljs-keyword">None</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testSize</span><span class="hljs-params">(self)</span>:</span>
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">40</span>, <span class="hljs-number">40</span>))
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">testResize</span><span class="hljs-params">(self)</span>:</span>
+        self.widget.resize(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+        self.assertEqual(self.widget.getSize(), (<span class="hljs-number">100</span>, <span class="hljs-number">100</span>))   
+<span class="hljs-comment"># 测试</span>
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    unittest.main()</code></pre>
+
+<p>为了使单元测试更具亲合力，PyUnit软件包中还提供了一个图形界面测试脚本unittestgui.py，将其复制到当前目录后，可以执行下面的命令来启动该测试工具，对main_runner.py脚本中的所有测试用例进行测试</p>
+
+<blockquote>
+  <p>python unittestgui.py main_runner</p>
+</blockquote>
+
+<p><strong>忽略测试案例( Python2.7支持)</strong> <br>
+可以分无条件忽略和有条件忽略,通过装饰器实现</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-decorator">@unittest.skip("demonstrating skipping")</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_nothing</span><span class="hljs-params">(self)</span>:</span>
+        self.fail(<span class="hljs-string">"shouldn't happen"</span>)
+    <span class="hljs-decorator">@unittest.skipIf(mylib.__version__ &lt; (1, 3),</span>
+                     <span class="hljs-string">"not supported in this library version"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_format</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># Tests that work for only a certain version of the library.</span>
+        <span class="hljs-keyword">pass</span>
+    <span class="hljs-decorator">@unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_windows_support</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># windows specific testing code</span>
+        <span class="hljs-keyword">pass</span></code></pre>
+
+<p>测试类也可以忽略</p>
+
+
+
+<pre class="prettyprint"><code class="language-python hljs "><span class="hljs-decorator">@unittest.skip("showing class skipping")</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySkippedTestCase</span><span class="hljs-params">(unittest.TestCase)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_not_run</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">pass</span></code></pre>
+
+<p><strong>总结</strong>： <br>
+参考博客： <a href="http://blog.csdn.net/hackerain/article/details/24095117">深入理解unittest</a> <br>
+ - 一个TestCase的实例就是一个测试用例。什么是测试用例呢？就是一个完整的测试流程，包括测试前准备环境的搭建(setUp)，执行测试代码(run)，以及测试后环境的还原(tearDown)。元测试(unit test)的本质也就在这里，一个测试用例是一个完整的测试单元，通过运行这个测试单元，可以对某一个问题进行验证。 <br>
+ - 而多个测试用例集合在一起，就是TestSuite，而且TestSuite也可以嵌套TestSuite。 <br>
+ - TestLoader是用来加载TestCase到TestSuite中的，其中有几个loadTestsFrom__()方法，就是从各个地方寻找TestCase，创建它们的实例，然后add到TestSuite中，再返回一个TestSuite实例。 <br>
+ - TextTestRunner是来执行测试用例的，其中的run(test)会执行TestSuite/TestCase中的run(result)方法。 <br>
+ - 测试的结果会保存到TextTestResult实例中，包括运行了多少测试用例，成功了多少，失败了多少等信息。</p>
+
+<h3 id="unittest断言"><strong>unittest断言</strong></h3>
+
+<p>自动化脚本最重要的是断言，正确设置断言以后才能帮助我们判断测试用例执行结果。列举一下常用断言：</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs livecodeserver">assertEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> == b      
+assertNotEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> != b      
+assertTrue(x)     bool(x) is True      
+assertFalse(x)     bool(x) is False      
+assertIs(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> is b     <span class="hljs-number">2.7</span>
+assertIsNot(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> is <span class="hljs-operator">not</span> b     <span class="hljs-number">2.7</span>
+assertIsNone(x)     x is None     <span class="hljs-number">2.7</span>
+assertIsNotNone(x)     x is <span class="hljs-operator">not</span> None     <span class="hljs-number">2.7</span>
+assertIn(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> <span class="hljs-operator">in</span> b     <span class="hljs-number">2.7</span>
+assertNotIn(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> <span class="hljs-operator">not</span> <span class="hljs-operator">in</span> b     <span class="hljs-number">2.7</span>
+assertIsInstance(<span class="hljs-operator">a</span>, b)     isinstance(<span class="hljs-operator">a</span>, b)     <span class="hljs-number">2.7</span>
+assertNotIsInstance(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">not</span> isinstance(<span class="hljs-operator">a</span>, b)     <span class="hljs-number">2.7</span>
+assertAlmostEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-built_in">round</span>(<span class="hljs-operator">a</span>-b, <span class="hljs-number">7</span>) == <span class="hljs-number">0</span>      
+assertNotAlmostEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-built_in">round</span>(<span class="hljs-operator">a</span>-b, <span class="hljs-number">7</span>) != <span class="hljs-number">0</span>      
+assertGreater(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> &gt; b     <span class="hljs-number">2.7</span>
+assertGreaterEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> &gt;= b     <span class="hljs-number">2.7</span>
+assertLess(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> &lt; b     <span class="hljs-number">2.7</span>
+assertLessEqual(<span class="hljs-operator">a</span>, b)     <span class="hljs-operator">a</span> &lt;= b     <span class="hljs-number">2.7</span>
+assertRegexpMatches(s, re)     regex.search(s)     <span class="hljs-number">2.7</span>
+assertNotRegexpMatches(s, re)     <span class="hljs-operator">not</span> regex.search(s)     <span class="hljs-number">2.7</span>
+assertItemsEqual(<span class="hljs-operator">a</span>, b)     sorted(<span class="hljs-operator">a</span>) == sorted(b) <span class="hljs-operator">and</span> works <span class="hljs-operator">with</span> unhashable objs     <span class="hljs-number">2.7</span>
+assertDictContainsSubset(<span class="hljs-operator">a</span>, b)     all <span class="hljs-operator">the</span> key/<span class="hljs-built_in">value</span> pairs <span class="hljs-operator">in</span> <span class="hljs-operator">a</span> exist <span class="hljs-operator">in</span> b     <span class="hljs-number">2.7</span>
+assertMultiLineEqual(<span class="hljs-operator">a</span>, b)     strings     <span class="hljs-number">2.7</span>
+assertSequenceEqual(<span class="hljs-operator">a</span>, b)     sequences     <span class="hljs-number">2.7</span>
+assertListEqual(<span class="hljs-operator">a</span>, b)     lists     <span class="hljs-number">2.7</span>
+assertTupleEqual(<span class="hljs-operator">a</span>, b)     tuples     <span class="hljs-number">2.7</span>
+assertSetEqual(<span class="hljs-operator">a</span>, b)     sets <span class="hljs-operator">or</span> frozensets     <span class="hljs-number">2.7</span>
+assertDictEqual(<span class="hljs-operator">a</span>, b)     dicts     <span class="hljs-number">2.7</span>
+assertMultiLineEqual(<span class="hljs-operator">a</span>, b)     strings     <span class="hljs-number">2.7</span>
+assertSequenceEqual(<span class="hljs-operator">a</span>, b)     sequences     <span class="hljs-number">2.7</span>
+assertListEqual(<span class="hljs-operator">a</span>, b)     lists     <span class="hljs-number">2.7</span>
+assertTupleEqual(<span class="hljs-operator">a</span>, b)     tuples     <span class="hljs-number">2.7</span>
+assertSetEqual(<span class="hljs-operator">a</span>, b)     sets <span class="hljs-operator">or</span> frozensets     <span class="hljs-number">2.7</span>
+assertDictEqual(<span class="hljs-operator">a</span>, b)     dicts     <span class="hljs-number">2.7</span></code></pre>
+
+<p><strong>小结</strong> <br>
+测试是保证软件质量的关键，新的软件开发方法要求程序员在编写代码前先编写测试用例，并在软件开发过程中不断地进行单元测试，从而最大限度地减少缺陷(Bug)的产生。软件单元测试是XP方法的基石，测试框架为程序员进行单元测试提供了统一的规范，Python程序员可以使用PyUnit作为软件开发过程中的自动单元测试框架。</p></div>
+        <script  type="text/javascript">
+            $(function () {
+                $('pre.prettyprint code').each(function () {
+                    var lines = $(this).text().split('\n').length;
+                    var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                    $(this).addClass('has-numbering').parent().append($numbering);
+                    for (i = 1; i <= lines; i++) {
+                        $numbering.append($('<li/>').text(i));
+                    };
+                    $numbering.fadeIn(1700);
+                });
+            });
+        </script>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.13-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="72236804" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='http://blog.csdn.net/weixin_36001351/article/details/72236617';">上一篇</span><a href="http://blog.csdn.net/weixin_36001351/article/details/72236617" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">pycharm配置集</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='http://blog.csdn.net/weixin_36001351/article/details/72458416';">下一篇</span><a href="http://blog.csdn.net/weixin_36001351/article/details/72458416" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">python学习之变量</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36"  style="max-height:250px">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/z_johnny/article/details/69569554" title="Python 单元测试库 Mock unittest" strategy="BlogCommendFromCsdn_0" target="_blank">Python 单元测试库 Mock unittest</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/detail/491?utm_source=blog7" title="【直播】70天软考冲刺计划--任铄" strategy="undefined" target="_blank">【直播】70天软考冲刺计划--任铄</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://download.csdn.net/download/nevsayno/4274316" title="python单元测试框架原理探析" strategy="BlogCommendFromCsdn_1" target="_blank">python单元测试框架原理探析</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/60?utm_source=blog7" title="【直播】打通Linux脉络 进程、线程、调度--宋宝华" strategy="undefined" target="_blank">【直播】打通Linux脉络 进程、线程、调度--宋宝华</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/cromma/article/details/52296152" title="python单元测试--深入理解unittest" strategy="BlogCommendFromCsdn_2" target="_blank">python单元测试--深入理解unittest</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/48?utm_source=blog7" title="【直播】机器学习之凸优化--马博士" strategy="undefined" target="_blank">【直播】机器学习之凸优化--马博士</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://download.csdn.net/download/z_johnny/9683404" title="python 轻量单元测试框架 JzFramework" strategy="BlogCommendFromCsdn_3" target="_blank">python 轻量单元测试框架 JzFramework</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/combo/detail/522?utm_source=blog7" title="【套餐】MATLAB基础+MATLAB数据分析与统计--魏伟" strategy="undefined" target="_blank">【套餐】MATLAB基础+MATLAB数据分析与统计--魏伟</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011541946/article/details/70238473" title="Python+Selenium框架设计篇之2-简单介绍unittest单元测试框架" strategy="BlogCommendFromCsdn_4" target="_blank">Python+Selenium框架设计篇之2-简单介绍unittest单元测试框架</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/5662?utm_source=blog7" title="【课程】3小时掌握Docker最佳实战--徐西宁" strategy="undefined" target="_blank">【课程】3小时掌握Docker最佳实战--徐西宁</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://download.csdn.net/download/wwjchh/3269640" title="Python自动单元测试框架学习" strategy="BlogCommendFromCsdn_5" target="_blank">Python自动单元测试框架学习</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="" title="【课程】深度学习基础与TensorFlow实践--AI100" strategy="undefined" target="_blank">【课程】深度学习基础与TensorFlow实践--AI100</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/dyx1024/article/details/7435445" title="Python:实用抓图工具开发介绍(含需求分析、设计、编码、单元测试、打包、系统测试、发布各环节)" strategy="BlogCommendFromCsdn_6" target="_blank">Python:实用抓图工具开发介绍(含需求分析、设计、编码、单元测试、打包、系统测试、发布各环节)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://download.csdn.net/download/wangliyao518/2716035" title="Python自动单元测试" strategy="BlogCommendFromCsdn_7" target="_blank">Python自动单元测试</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/xiaoquantouer/article/details/75089200" title="python单元测试之unittest框架使用总结" strategy="BlogCommendFromCsdn_8" target="_blank">python单元测试之unittest框架使用总结</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://download.csdn.net/download/f578170232/7356581" title="Python单元测试框架" strategy="BlogCommendFromCsdn_9" target="_blank">Python单元测试框架</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+            <script> 
+                (function() { 
+                    var s = "_" + Math.random().toString(36).slice(2); 
+                    document.write('<div id="' + s + '"></div>'); 
+                    (window.slotbydup=window.slotbydup || []).push({ 
+                        id: '4228013', 
+                        container: s, 
+                        size: '0,0', 
+                        display: 'inlay-fix' 
+                    }); 
+                })(); 
+            </script>
+    </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/weixin_36001351/svc/GetSuggestContent/72236804",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '72236804';
+    var commentscount = 0;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='python学习之单元测试';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/weixin_36001351" target="_blank">
+    <img src="http://avatar.csdn.net/2/4/E/1_weixin_36001351.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/weixin_36001351" class="user_name" target="_blank">weixin_36001351</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=weixin_36001351','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+                                            <a  target="_blank">
+                                                    <img src="http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/chizhiyiheng.png" onmouseover="m_over_m(this,4)" onmouseout="m_out_m()" alt="2" >
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>2680次</span></li>
+    <li>积分：<span>216</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog2.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：216 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>16篇</span></li>
+    <li>转载：<span>9篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>1条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/weixin_36001351/article/category/6415552" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">正则表达式</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6419690" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">计算机语言学习</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6899621" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">视频学习</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6900762" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">编码工具</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6902592" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据挖掘实践</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6905830" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6909691" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">爬虫</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/weixin_36001351/article/category/6913119" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">问题集</a><span>(2)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/weixin_36001351/article/month/2017/06">2017年06月</a><span>(1)</span></li><li><a href="/weixin_36001351/article/month/2017/05">2017年05月</a><span>(20)</span></li><li><a href="/weixin_36001351/article/month/2016/09">2016年09月</a><span>(4)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/weixin_36001351/article/details/71374216" title="Mysql语法大全">Mysql语法大全</a><span>(343)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71366333" title="LDA主题模型、Word2Vec">LDA主题模型、Word2Vec</a><span>(292)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/72496031" title="python数据挖掘包Pandas基本操作">python数据挖掘包Pandas基本操作</a><span>(261)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71218887" title="推荐机制">推荐机制</a><span>(196)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71305140" title="聚类综述">聚类综述</a><span>(189)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/52587304" title="正则表达式学习3">正则表达式学习3</a><span>(171)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71374188" title="十大经典算法之Apriori">十大经典算法之Apriori</a><span>(148)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/52551345" title="Python学习之概览">Python学习之概览</a><span>(133)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71178485" title="GitHub使用日记——基本流程">GitHub使用日记——基本流程</a><span>(121)</span>
+</li>
+<li>
+<a href="/weixin_36001351/article/details/71998919" title="Python学习之面向对象编程">Python学习之面向对象编程</a><span>(100)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/77532934" target="_blank">* CSDN日报20170824——《你为什么跳槽？真正原因找到了吗？》</a></li>
+<li><a href="http://blog.csdn.net/21cnbao/article/details/77505330" 
+target="_blank">* Linux的任督二脉：进程调度和内存管理</a></li>
+<li><a href="http://blog.csdn.net/bemavery/article/details/77448589"target="_blank">* 秒杀系统的一点思考</a></li>
+<li><a href="http://blog.csdn.net/sweettool/article/details/77018506" 
+target="_blank">* TCP网络通讯如何解决分包粘包问题</a></li>
+<li><a href="http://blog.csdn.net/mindfloating/article/details/77434604" 
+target="_blank">* 技术与技术人员的价值</a></li>
+<li><a href="http://blog.csdn.net/gitchat/article/details/77338211" 
+target="_blank">* GitChat·人工智能 | 除了深度学习，机器翻译还需要啥？
+</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/weixin_36001351/article/details/72496031#comments">python数据挖掘包Pandas基本操作</a>
+    <p style="margin:0px;"><a href="/sunhuaqiang1" class="user_name">sunhuaqiang1</a>:
+CSDN博友你好，我是孙华强，现将此篇博文收录进“Python知识库”。CSDN现在在做CSDN博客...
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+                 <!-- 广告位开始 --> 
+                <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true" data-mod="ad_popu_189" data-mtp="63" data-order="40" data-con="ad_content_1259" style="width: 250px; height: 500px;">
+                        <div id="nav_show_top_stop" style="width: 250px;height: 500px;z-index:1000"><div id="cpro_u2734133"></div><div id="cpro_u3031286"></div></div>
+                   </div>
+                    <script>
+
+                        setTimeout(function () {
+                            var naviga_offsetTop = 0; function naviga_stay_top() {
+                                var scrollTop = jQuery(document).scrollTop();
+                                if (scrollTop > naviga_offsetTop) {
+                                    jQuery("#nav_show_top_stop").css({ "position": "fixed" });
+                                    jQuery("#nav_show_top_stop").css({ "top": "0px" });
+                                } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); }
+                            }
+                            function onload_function() {
+                                naviga_offsetTop = jQuery("#nav_show_top_stop").position().top;
+                                jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top);
+                                jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top);
+                            } jQuery(document).ready(onload_function);
+                        }, 200);
+
+                    </script>
+                   <script type="text/javascript">
+                       /*PC端-博客内容页左侧Button-250*250，创建于2016-08-15*/
+                       (window.cproArray = window.cproArray || []).push({ id: "u2734133" });
+</script>
+<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+<script type="text/javascript">
+    (window.cproArray = window.cproArray || []).push({ id: "u3031286" });
+</script>
+<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+   
+     <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170719001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=5717910"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+</body>
+</html>   

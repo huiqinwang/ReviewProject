@@ -1,0 +1,52 @@
+leetcode动态规划综合：http://blog.csdn.net/king_like_coding/article/details/52904122
+Longest Palindromic Substring-median
+确定：单个字符为回文，直接判断相邻字符是否为回文(len=2)
+基于上面，基本思想：回文的子串也是回文
+对len=(3....n)子问题求回文，一直扩展到原串是否为回文
+算种数的动态规划
+climbStair：
+确定vec[0]=vec[1]=1 vec[2]=2
+基于上面，vec[i]：跳一步vec[i-1] 和跳两步vec[i-2]方式得到公式
+uniquePath:
+处理边界情况：none case 和 special case
+确定：以第一个元素所在行和列上的格子都为1：只能从上面元素或者左边元素直达
+思想：每个位置只能右或者下： dp[row][col]=dp[row-1][col]+dp[row][col-1]
+
+Decode Ways
+
+这类型的题目主要是算种数，依靠前面算出的种数算后面的种数。第70题Climbing Stairs和91题Decode Ways是利用了斐波那契数列，两道题目非常相似。第95题Unique Binary Search Trees II是卡特兰数的应用。第62题Unique Paths和63题Unique Paths II是两道二维的算种数的问题
+二维动态规划
+uniquePath:
+处理边界情况：none case 和 special case
+确定：以第一个元素所在行和列上的格子都为1：只能从上面元素或者左边元素直达
+思想：每个位置只能右或者下： dp[row][col]=dp[row-1][col]+dp[row][col-1]
+Edit Distance
+网址：https://segmentfault.com/a/1190000003741294(原文有错，代码对)
+将一个非空字符串变成空字符串的最小操作数是字母个数（全删），反之亦然
+针对i和j位置两个字母：str1(i-1)增加一个，str2(j-1)减少一个
+a和b相等：dp[i][j] = min(dp[i－1][j]+1, dp[i][j－1]+1, dp[i-1][j-1]):
+a和b不相等：dp[i][j] = min(dp[i－1][j]+1, dp[i][j－1]+1, dp[i-1][j-1]+1)
+Interleaving String
+http://www.cnblogs.com/zuoyuan/p/3767650.html
+单个字符肯定是True
+dp[i][j]表示s1[0...i-1]和s2[0...j-1]是否可以拼接为s3[0...i+j-1]，可以拼接为true，不可以拼接为false
+Minimum Path Sum
+二维动态规划相当于填一张二维的表。经常的做法先填完第一行和第一列，然后其他的几行用一个两次循环，每一个空格通过相邻的左边[i][j-1]，上边[i-1][j]或着对角[i-1][j-1]来填完所有项。
+局部动态规划
+Maximum Subarray
+Maximum Product Subarray
+乘积：有正有负，利用正和负两个存储正和负的最大乘积
+初始化：全局最大值、正累积、负累积
+当nums[i]>0：p_max = max(p_max*nums[i],nums[i]) and n_min = n_min*nums[i]
+当nums[i]<0：p_max = n_min*nums[i] and n_min = min(p_max*nums[i], numsi[)
+最后全局：global_max = max(p_max,global_max)
+Longest Increasing Subsequence
+
+这类型题目的特点是它最后一个的递推量并不是相应的最优解，而是所有递推量的最大值才是最优解。（当然你也可以设置两个递推量，一个全局的，一个局部的，而这里考虑的递推量是局部的），递推量的特点是一定包括自己，所以是局部的
+全局动态规划
+Longest Valid Parentheses
+https://segmentfault.com/a/1190000003481194
+第一种方法：括号匹配利用栈
+第二种：动态规划
+
+最普通的动态规划，相对于局部动态规划递推量就是最优解
